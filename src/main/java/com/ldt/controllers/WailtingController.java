@@ -13,7 +13,6 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/waiting"})
 public class WailtingController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -22,6 +21,7 @@ public class WailtingController extends HttpServlet {
             req.setAttribute("username", u.getUsername());
             if (u.getRoleid() == 2) {
                 resp.sendRedirect(req.getContextPath() + "/admin/home");
+
             } else if (u.getRoleid() == 3) {
                 resp.sendRedirect(req.getContextPath() + "/manager/home");
             } else {
@@ -31,5 +31,6 @@ public class WailtingController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/login");
         }
     }
+
 }
 

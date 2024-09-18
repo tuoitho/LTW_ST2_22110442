@@ -16,6 +16,22 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//       chuyển sang trang home nếu đã đăng nhập
+        HttpSession session = req.getSession();
+        if (session != null && session.getAttribute("account") != null) {
+            UserModel u = (UserModel) session.getAttribute("account");
+            req.setAttribute("username", u.getUsername());
+            if (u.getRoleid() == 2) {
+                resp.sendRedirect(req.getContextPath() + "/admin/home");
+                return;
+            } else if (u.getRoleid() == 3) {
+                resp.sendRedirect(req.getContextPath() + "/manager/home");
+                return;
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/home");
+                return;
+            }
+        }
         req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
     }
 
@@ -32,7 +48,7 @@ public class LoginController extends HttpServlet {
             isRemember = true;
         }
         String alertMsg = "";
-        if (username.isEmpty() || username.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty()) {
             alertMsg = "Username or password is empty!";
             req.setAttribute("alert", alertMsg);
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
@@ -44,6 +60,10 @@ public class LoginController extends HttpServlet {
             session.setAttribute("account", user);
             if (isRemember) {
                 saveRememberMe(resp, username);
+//                tao session
+//                createSession(req, user);
+            }else {
+                deleteRememberMe(resp);
             }
             resp.sendRedirect(req.getContextPath() + "/waiting");
         }else {
@@ -58,4 +78,15 @@ public class LoginController extends HttpServlet {
         resp.addCookie(cookie);
 
     }
+    private void deleteRememberMe(HttpServletResponse resp) {
+        Cookie cookie = new Cookie(Constant.COOKIE_REMEMBER, "");
+        cookie.setMaxAge(0);
+        resp.addCookie(cookie);
+    }
+//    private void createSession(HttpServletRequest req, UserModel user) {
+//        HttpSession session = req.getSession(true);
+//        session.setAttribute("account", user);
+////        set age
+//        session.setMaxInactiveInterval(60 * 60 * 24 * 30);
+//    }
 }

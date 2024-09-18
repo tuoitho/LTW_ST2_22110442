@@ -21,4 +21,31 @@ public class UserService implements IUserService {
     public UserModel findByUsername(String username) {
         return userDao.findByUsername(username);
     }
+
+    @Override
+    public UserModel findByEmail(String email) {
+        return userDao.findByEmail(email);
+
+    }
+
+    @Override
+    public UserModel register(String username, String password, String email, int role) {
+        return userDao.insert(new UserModel(username, password, email,role));
+    }
+
+    @Override
+    public UserModel updatePassword(String email,String password) {
+        UserModel user = userDao.findByEmail(email);
+        user.setPassword(password);
+        return userDao.update(user,password);
+    }
+
+    public static void main(String[] args) {
+        try {
+            IUserService userService = new UserService();
+            System.out.println(userService.login("trungnh", "1"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

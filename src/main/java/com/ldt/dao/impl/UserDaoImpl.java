@@ -1,6 +1,5 @@
 package com.ldt.dao.impl;
 
-import com.ldt.configs.DBConnectMySQL;
 import com.ldt.configs.DBConnectSQL;
 import com.ldt.dao.IUserDao;
 import com.ldt.models.UserModel;
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
+public class UserDaoImpl extends DBConnectSQL implements IUserDao {
     public Connection conn = null;
     public PreparedStatement ps = null;
     public ResultSet rs = null;
@@ -73,22 +72,25 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
     }
 
     @Override
-    public void insert(UserModel user) {
-        String sql = "INSERT INTO users(id,username, password, images, fullname, email, phone, roleid, createdDate) VALUES(?,?,?,?,?,?,?,?,?)";
+    public UserModel insert(UserModel user) {
+        String sql = "INSERT INTO users(username,fullname, email, password, images, phone, roleid, createdDate) VALUES(?,?,?,?,?,?,?,?)";
         try {
-            conn = getDatabaseConnection();
+            conn = getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, user.getId());
-            ps.setString(2, user.getUsername());
-            ps.setString(3, user.getFullname());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getPassword());
-            ps.setString(6, user.getImages());
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getFullname());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPassword());
+            ps.setString(5, user.getImages());
+            ps.setString(6, user.getPhone());
+            ps.setInt(7, user.getRoleid());
+            ps.setDate(8, user.getCreateDate());
 
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return user;
     }
 
     @Override
@@ -118,10 +120,53 @@ public class UserDaoImpl extends DBConnectMySQL implements IUserDao {
         return null;
     }
 
+    @Override
+    public UserModel findByEmail(String email) {
+        String sql = "SELECT * FROM [Users] WHERE email = ? ";
+        try {
+            conn = new DBConnectSQL().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                UserModel user = new UserModel();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setUsername(rs.getString("username"));
+                user.setFullname(rs.getString("fullname"));
+                user.setPassword(rs.getString("password"));
+                user.setImages(rs.getString("images"));
+                user.setRoleid(Integer.parseInt(rs.getString("roleid")));
+                user.setPhone(rs.getString("phone"));
+                user.setCreateDate(rs.getDate("createdDate"));
+                return user;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public UserModel update(UserModel user, String password) {
+        String sql = "UPDATE [Users] SET password = ? WHERE email = ?";
+        try {
+            conn = new DBConnectSQL().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setString(2, user.getEmail());
+            ps.executeUpdate();
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         try {
             IUserDao userDao = new UserDaoImpl();
-            System.out.println(userDao.findByUsername("trungnh"));
+            System.out.println(userDao.insert(new UserModel("a", "123", "a@a",1)));
         }catch (Exception e){
             e.printStackTrace();
         }

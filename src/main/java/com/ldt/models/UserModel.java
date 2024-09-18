@@ -7,11 +7,19 @@ import java.sql.Date;
 public class UserModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+//    khai bao cac truong trong database
     private int id;
     private String username;
     private String password;
 
     public UserModel() {
+    }
+
+    public UserModel(String username, String password, String email, int role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roleid = role;
     }
 
     private String images;
@@ -20,6 +28,10 @@ public class UserModel implements Serializable {
     private String phone;
     private int roleid;
     private Date createDate;
+
+
+
+
 
     public int getId() {
         return id;

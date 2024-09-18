@@ -7,6 +7,9 @@ import java.util.List;
 public interface IUserDao {
     List<UserModel> findAll();
     UserModel findById(int id);
-    void insert(UserModel user);
+    UserModel insert(UserModel user);
     UserModel findByUsername(String username);
+
+    UserModel findByEmail(String email);
+    UserModel update(UserModel user, String password);
 }

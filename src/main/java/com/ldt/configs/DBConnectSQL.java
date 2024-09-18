@@ -10,7 +10,6 @@ public class DBConnectSQL {
     private static String USER_NAME = "sa";
     private static String PASSWORD = "123456";
     private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-//
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName(DRIVER);
@@ -28,13 +27,6 @@ public class DBConnectSQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        Connection connection = null;
-//        try {
-//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=ltwst2;user=sa;password=123456;trustServerCertificate=true");
-//            System.out.println("Success");
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
+
     }
 }
