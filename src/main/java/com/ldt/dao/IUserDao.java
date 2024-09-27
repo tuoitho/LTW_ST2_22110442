@@ -12,4 +12,5 @@ public interface IUserDao {
 
     UserModel findByEmail(String email);
     UserModel update(UserModel user, String password);
+    UserModel updateProfile(UserModel user);
 }

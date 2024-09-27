@@ -40,8 +40,8 @@ public class LoginController extends HttpServlet {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
-        String username = req.getParameter("uname");
-        String password = req.getParameter("psw");
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
         String remember = req.getParameter("remember");
         boolean isRemember = false;
         if ("on".equals(remember)) {

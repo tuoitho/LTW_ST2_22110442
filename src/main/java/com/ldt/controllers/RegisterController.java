@@ -26,7 +26,7 @@ public class RegisterController extends HttpServlet {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
-        String username = req.getParameter("uname");
+        String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         int role = Integer.parseInt(req.getParameter("role"));
@@ -58,7 +58,7 @@ public class RegisterController extends HttpServlet {
         // Register user
         user = userService.register(username, password, email,role);
         if (user != null) {
-            req.setAttribute("alert", "Register successfully! Please login!");
+            req.setAttribute("alert", "success");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         } else {
             req.setAttribute("alert", "Register failed!");

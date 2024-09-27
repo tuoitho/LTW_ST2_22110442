@@ -19,9 +19,10 @@ public class LogoutController extends HttpServlet {
 //        delete cookie
         HttpSession session = req.getSession();
         session.removeAttribute("account");
-        session.invalidate();
-        deleteRememberMe(resp);
-        resp.sendRedirect(req.getContextPath() + "/login");
+//        session.invalidate();
+//        deleteRememberMe(resp);
+//        resp.sendRedirect(req.getContextPath() + "/login");
+        resp.sendRedirect("home");
 
     }
     private void deleteRememberMe(HttpServletResponse resp) {

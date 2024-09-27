@@ -17,4 +17,5 @@ public class HomeController extends HttpServlet {
         req.getRequestDispatcher("/views/home.jsp").forward(req, resp);
 
     }
+
 }
