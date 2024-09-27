@@ -148,7 +148,7 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
     }
 
     @Override
-    public UserModel update(UserModel user, String password) {
+    public UserModel updatePassword(UserModel user, String password) {
         String sql = "UPDATE [Users] SET password = ? WHERE email = ?";
         try {
             conn = new DBConnectSQL().getConnection();
@@ -165,12 +165,22 @@ public class UserDaoImpl extends DBConnectSQL implements IUserDao {
 
     @Override
     public UserModel updateProfile(UserModel user) {
-        String sql = "Update users set images = ? where username=?";
+        String sql = """
+                UPDATE [Users]
+                SET images = ?,
+                    fullname = ?,
+                    email = ?,
+                    phone = ?
+                WHERE username = ?
+                """;
         try {
             conn = new DBConnectSQL().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getImages());
-            ps.setString(2, user.getUsername());
+            ps.setString(2, user.getFullname());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getUsername());
             ps.executeUpdate();
             return user;
         } catch (Exception e) {

@@ -21,9 +21,11 @@ public class DBConnectSQL {
     }
 
     public static void main(String[] args) {
+        Connection connection = null;
         try {
-            new DBConnectSQL();
-            System.out.println(DBConnectSQL.getConnection());
+            connection =  DBConnectSQL.getConnection();
+            System.out.println(connection);
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

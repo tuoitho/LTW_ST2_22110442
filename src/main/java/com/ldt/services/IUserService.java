@@ -9,4 +9,6 @@ public interface IUserService {
     UserModel register(String username, String password, String email, int role);
 
     UserModel updatePassword(String email, String password);
+
+    UserModel updateProfile(UserModel user);
 }

@@ -2,7 +2,7 @@ package com.ldt.controllers;
 
 import com.ldt.models.UserModel;
 import com.ldt.services.IUserService;
-import com.ldt.services.impl.UserService;
+import com.ldt.services.impl.UserServiceImpl;
 import com.ldt.utils.Constant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private IUserService userService = new UserService();
+    private IUserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
