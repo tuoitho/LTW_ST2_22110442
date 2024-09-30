@@ -131,6 +131,19 @@
     });
 </script>
 <!-- END PAGE LEVEL JAVASCRIPTS -->
+
+
+<script>
+    function chooseFile(fileInput){
+        if (fileInput.files && fileInput.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagess').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+</script>
 </body>
 <!-- END BODY -->
 </html>

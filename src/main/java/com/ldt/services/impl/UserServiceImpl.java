@@ -42,7 +42,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserModel updateProfile(UserModel user) {
-        return null;
+        return userDao.updateProfile(user);
     }
 
     public static void main(String[] args) {

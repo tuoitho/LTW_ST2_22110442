@@ -43,7 +43,7 @@
 
                             </c:when>
                             <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/member/myaccount">${sessionScope.account.fullname}</a>
+                                <a href="${pageContext.request.contextPath}/profile">${sessionScope.account.fullname}</a>
                                         | <a href="${pageContext.request.contextPath}/logout">Logout</a>
 
                             </c:otherwise>

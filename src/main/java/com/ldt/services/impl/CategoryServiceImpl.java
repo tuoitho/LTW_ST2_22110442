@@ -8,7 +8,7 @@ import com.ldt.services.ICategoryService;
 import java.util.List;
 
 public class CategoryServiceImpl implements ICategoryService {
-    public ICategoryDao categoryDao=new CategoryDaoImpl();
+    public ICategoryDao categoryDao = new CategoryDaoImpl();
 
     @Override
     public List<CategoryModel> findAll() {
@@ -22,23 +22,25 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public void insert(CategoryModel categoryModel) {
-        categoryDao.insert(categoryModel);
+//        List<CategoryModel> cate = this.findName(categoryModel.getCategoryname());
+//        if (cate != null)
+            categoryDao.insert(categoryModel);
     }
 
     @Override
     public void update(CategoryModel categoryModel) {
-        CategoryModel category =new CategoryModel();
-        category=categoryDao.findById(categoryModel.getCategoryid());
-        if(category!=null){
+        CategoryModel category = new CategoryModel();
+        category = categoryDao.findById(categoryModel.getCategoryid());
+        if (category != null) {
             categoryDao.update(categoryModel);
         }
     }
 
     @Override
     public void delete(int id) {
-        CategoryModel category =new CategoryModel();
-        category=categoryDao.findById(id);
-        if(category!=null){
+        CategoryModel category = new CategoryModel();
+        category = categoryDao.findById(id);
+        if (category != null) {
             categoryDao.delete(id);
         }
     }

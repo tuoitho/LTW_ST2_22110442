@@ -142,4 +142,22 @@ public class CategoryDaoImpl implements ICategoryDao {
         }
         return null;
     }
+
+    @Override
+    public void updateStatus(int id,int status) {
+        try {
+            conn = DBConnectSQL.getConnection();
+            String sql = "UPDATE categories SET status = ? WHERE categoryid = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, status);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+            conn.close();
+            pst.close();
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
